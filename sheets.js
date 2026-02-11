@@ -9,7 +9,7 @@ const auth = new google.auth.GoogleAuth({
   scopes: ["https://www.googleapis.com/auth/spreadsheets"]
 });
 
-/*async function appendDutyRow(data) {
+async function appendDutyRow(data) {
   const client = await auth.getClient();
   const sheets = google.sheets({ version: "v4", auth: client });
 
@@ -28,6 +28,6 @@ const auth = new google.auth.GoogleAuth({
       ]]
     }
   });
-}*/
+}
 
 module.exports = { appendDutyRow };
