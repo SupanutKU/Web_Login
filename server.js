@@ -3,7 +3,6 @@ const express = require("express");
 const session = require("express-session");
 const path = require("path");
 const fs = require("fs");
-const { appendDutyRow } = require("./sheets");
 const HISTORY_FILE = path.join(__dirname, "data", "history.json");
 const app = express();
 const DATA_FILE = path.join(__dirname, "data", "users.json");
@@ -216,14 +215,6 @@ history.push({
 
 saveHistory(history);
 // 🔥 ใส่ Google Sheets ตรงนี้
-  await appendDutyRow({
-    date: new Date(end).toLocaleDateString("th-TH"),
-    name: user.name,
-    steam: user.discord,
-    checkIn: new Date(start).toLocaleTimeString("th-TH"),
-    checkOut: new Date(end).toLocaleTimeString("th-TH"),
-    total: formatMinutes(durationMinutes)
-  });
   user.dutyStart = null;
   user.onDuty = false;
   saveUsers(users);
