@@ -1,0 +1,52 @@
+<nav class="navbar">
+  <div class="logo">CENTER CITY</div>
+
+  <ul>
+    <li><a href="/">หน้าหลัก</a></li>
+    <li><a href="duty.html">Duty</a></li>
+    <li><a href="#">ประวัติ</a></li>
+  </ul>
+
+  <!-- ยังไม่ login -->
+  <a id="loginBtn" class="login-btn" href="/login.html">
+    เข้าสู่ระบบ
+  </a>
+
+  <!-- หลัง login -->
+<div id="userMenu" class="user-menu" style="display:none;">
+  <!-- avatar -->
+  <img id="userAvatar" class="profile-avatar" />
+
+  <!-- dropdown -->
+  <div class="dropdown luxury-profile">
+
+    <!-- TOP -->
+    <div class="profile-top">
+      <img id="userAvatarLarge" class="profile-avatar-large" />
+      <div class="profile-meta">
+        <div id="username" class="profile-name">username</div>
+        <div class="profile-badge">AGENCY</div>
+      </div>
+    </div>
+
+    <!-- INFO -->
+    <div class="profile-stats">
+      <div>หน่วยงาน : <b id="agency">-</b></div>
+      <div>ยศ : <b id="rank">-</b></div>
+      <div>เข้าเวรสะสม : <b id="dutyTime">0</b></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- HISTORY -->
+    <a href="/history.html" class="profile-link">
+      ประวัติการทำรายการ
+    </a>
+
+    <!-- LOGOUT -->
+    <a href="/logout" class="profile-logout">
+      ออกจากระบบ
+    </a>
+
+  </div>
+</div>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+    <img src="/assets/logo.png" class="logo-img">
+    CENTER CITY
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="/">หน้าหลัก</a></li>
+    <li><a href="/duty.html">เข้าเวร-ออกเวร</a></li>
+    <li><a href="/admin.html" class="active">จัดการเจ้าหน้าที่</a></li>
+  </ul>
+</nav>
+
+<div class="hero" style="margin-top:40px">
+  <h1>ADMIN PANEL</h1>
+  <p>เพิ่มเจ้าหน้าที่เข้าสู่ระบบ</p>
+
+  <input id="name" placeholder="ชื่อเจ้าหน้าที่">
+  <input id="steam" placeholder="Steam Hex / Discord ID">
+
+  <select id="rank" style="margin-top:10px">
+    <option value="">-- เลือกหน่วยงาน --</option>
+    <option value="POLICE">ตำรวจ (POLICE)</option>
+    <option value="MEDIC">แพทย์ (MEDIC)</option>
+  </select>
+
+  <div style="margin-top:20px">
+    <button class="login-btn" onclick="addUser()">เพิ่มเจ้าหน้าที่</button>
+    <button class="login-btn" onclick="location.href='/'">กลับหน้าแรก</button>
+  </div>
+
+  <!-- ✅ ให้ JS เป็นคนใส่หัวข้อ -->
+  <div id="policeList" style="margin-top:30px"></div>
+  <div id="medicList" style="margin-top:30px"></div>
+</div>
+
+<script src="/js/admin.js"></script>
+</body>
+</html>

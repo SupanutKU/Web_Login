@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <title>Center City Duty</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+
+<!-- ================= GUEST NAVBAR ================= -->
+<nav class="navbar" id="guest-navbar">
+  <div class="logo">
+    <img src="/assets/logo.png" class="logo-img">
+    CENTER CITY
+  </div>
+
+  <ul class="nav-links">
+    <li><a href="/">หน้าหลัก</a></li>
+    <li><a href="/duty.html">Duty</a></li>
+    <li><a href="#">ประวัติ</a></li>
+  </ul>
+
+  <a href="/auth/discord" class="login-btn">เข้าสู่ระบบ</a>
+</nav>
+
+<!-- ================= USER NAVBAR ================= -->
+<nav class="navbar user-navbar" id="user-navbar" style="display:none">
+  <!-- ซ้าย -->
+  <div class="logo">
+    <img src="/assets/logo.png" class="logo-img">
+    CENTER CITY
+  </div>
+
+  <!-- กลาง -->
+  <ul class="nav-links center-menu">
+    <li><a href="/">หน้าหลัก</a></li>
+    <li><a href="/duty.html">เข้าเวร-ออกเวร</a></li>
+    <li><a href="/history.html">ประวัติ</a></li>
+    <li><a href="/admin" class="active">จัดการเจ้าหน้าที่</a></li>
+  </ul>
+
+  <!-- ขวา : โปรไฟล์ -->
+  <div class="user-menu" id="userMenu">
+    <img id="avatar" class="profile-avatar" />
+
+    <!-- DROPDOWN -->
+    <div class="dropdown luxury-profile">
+
+      <!-- TOP -->
+      <div class="profile-top">
+        <img id="avatarLarge" class="profile-avatar-large" />
+        <div class="profile-meta">
+          <div id="username" class="profile-name">username</div>
+          <div class="profile-badge">AGENCY</div>
+        </div>
+      </div>
+
+      <!-- INFO -->
+      <div class="profile-stats">
+        <div>หน่วยงาน : <b id="agency">-</b></div>
+        <div>ยศ : <b id="rank">-</b></div>
+        <div>เข้าเวรสะสม : <b id="dutyTime">0</b></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- HISTORY -->
+      <a href="/history.html" class="profile-link">
+        ประวัติการทำรายการ
+      </a>
+
+      <!-- LOGOUT -->
+      <a href="/logout" class="profile-logout">
+        ออกจากระบบ
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= CONTENT ================= -->
+<section class="hero">
+  <h1><span>CENTER</span> CITY</h1>
+  <p>ระบบ Duty เจ้าหน้าที่ · Premium RP System</p>
+</section>
+
+<section class="stats">
+  <div class="card">
+    <h3>เจ้าหน้าที่ออนไลน์</h3>
+    <span id="stat-online">0</span>
+  </div>
+
+  <div class="card">
+    <h3>เจ้าหน้าที่ออฟไลน์</h3>
+    <span id="stat-offline">0</span>
+  </div>
+
+  <div class="card">
+    <h3>เวลาปฏิบัติงาน</h3>
+    <span id="stat-duty">0</span>
+  </div>
+
+  <div class="card">
+    <h3>เจ้าหน้าที่ทั้งหมด</h3>
+    <span id="stat-total">0</span>
+  </div>
+</section>
+
+<section class="systems">
+  <a class="sys police" href="/duty.html">
+    <h2>Police Duty</h2>
+    <p>ระบบลงเวลาเจ้าหน้าที่</p>
+  </a>
+
+  <a class="sys ems" href="/duty.html">
+    <h2>Medic Duty</h2>
+    <p>ระบบลงเวลาแพทย์</p>
+  </a>
+
+  <!-- ✅ ADMIN PANEL (กรอบขวาสุด) -->
+  <a class="sys admin" href="/admin">
+    <h2>Admin Panel</h2>
+    <p>จัดการผู้ใช้งาน</p>
+  </a>
+</section>
+  </a>
+</section>
+<section class="hero">
+ <div class="duty-list-card">
+  <h2>รายชื่อเจ้าหน้าที่ในระบบ</h2>
+
+  <div class="duty-columns">
+    <!-- POLICE -->
+    <div class="duty-column">
+      <div class="duty-title">👮 POLICE</div>
+      <ul id="policeList" class="duty-names"></ul>
+    </div>
+
+    <!-- MEDIC -->
+    <div class="duty-column">
+      <div class="duty-title">🚑 MEDIC</div>
+      <ul id="medicList" class="duty-names"></ul>
+    </div>
+  </div>
+</div>
+
+</section>
+<!-- ================= LOGIN CHECK ================= -->
+<script>
+fetch("/api/me", { credentials: "include" })
+  .then(res => {
+    if (!res.ok) throw new Error("not login");
+    return res.json();
+  })
+  .then(user => {
+    document.getElementById("guest-navbar").style.display = "none";
+    document.getElementById("user-navbar").style.display = "flex";
+
+    const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+
+    document.getElementById("username").innerText = user.username;
+    document.getElementById("avatar").src = avatarUrl;
+    document.getElementById("avatarLarge").src = avatarUrl;
+
+    document.getElementById("agency").innerText = user.agency || "-";
+    document.getElementById("rank").innerText = user.rank || "-";
+    document.getElementById("dutyTime").innerText = user.dutyTime || 0;
+  })
+  .catch(() => {
+  document.getElementById("guest-navbar").style.display = "flex";
+  document.getElementById("user-navbar").style.display = "none";
+
+  // ❌ ปิดเมนูที่ต้องล็อกอิน
+  document.querySelectorAll('a[href="/duty.html"], a[href="/history.html"], a[href="/admin.html"]')
+    .forEach(link => {
+      link.addEventListener("click", e => {
+        e.preventDefault();
+        alert("กรุณาเข้าสู่ระบบก่อนใช้งานเมนูนี้");
+      });
+    });
+});
+
+</script>
+
+<!-- ================= DROPDOWN CLICK ================= -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  fetch("/api/users")
+    .then(res => res.json())
+    .then(users => {
+      const policeList = document.getElementById("policeList");
+      const medicList = document.getElementById("medicList");
+      if (!policeList || !medicList) return;
+
+      policeList.innerHTML = "";
+      medicList.innerHTML = "";
+
+      users
+        .filter(u => u.onDuty) // แสดงเฉพาะคนเข้าเวร
+        .forEach(u => {
+          const li = document.createElement("li");
+          li.innerHTML = `<span class="duty-dot"></span> ${u.name}`;
+
+          if (u.role === "MEDIC") {
+            medicList.appendChild(li);
+          } else {
+            policeList.appendChild(li);
+          }
+        });
+    });
+});
+
+</script>
+<script src="/js/index.js"></script>
+</body>
+</html>

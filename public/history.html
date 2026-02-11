@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>ประวัติการเข้าเวร</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="logo">
+    <img src="/assets/logo.png" class="logo-img">
+    CENTER CITY
+  </div>
+  <ul class="nav-links">
+    <li><a href="/index.html">หน้าหลัก</a></li>
+    <li><a href="/duty.html">เข้าเวร-ออกเวร</a></li>
+    <li><a href="/history.html" class="active">ประวัติ</a></li>
+  </ul>
+</nav>
+
+<div class="hero" style="margin-top:40px">
+  <h1>ประวัติการเข้าเวร</h1>
+<div class="filter-box">
+  <button class="filter-btn active" data-unit="all">ทั้งหมด</button>
+  <button class="filter-btn" data-unit="POLICE">ตำรวจ</button>
+  <button class="filter-btn" data-unit="MEDIC">แพทย์</button>
+</div>
+
+<div class="summary-box" id="summary"></div>
+
+<table class="history-table">
+    <thead>
+      <tr>
+        <th>ชื่อ</th>
+        <th>เข้าเวร</th>
+        <th>ออกเวร</th>
+        <th>ชั่วโมง</th>
+      </tr>
+    </thead>
+    <tbody id="list"></tbody>
+  </table>
+</div>
+
+<script src="/js/history.js"></script>
+</body>
+</html>

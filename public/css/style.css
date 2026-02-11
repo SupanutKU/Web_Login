@@ -1,0 +1,878 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  color: #fff;
+  background: radial-gradient(circle at top, #0b1e3a, #05070d 65%);
+}
+
+/* ================= NAVBAR ================= */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 48px;
+  position: relative;
+  z-index: 999;
+  overflow: visible; /* ⭐ สำคัญ */
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.logo-img {
+  height: 42px;
+  filter: drop-shadow(0 0 10px rgba(63,210,255,.6));
+}
+
+.nav-links {
+  display: flex;
+  gap: 28px;
+  list-style: none;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  opacity: .85;
+  transition: .2s;
+}
+
+.navbar a:hover {
+  opacity: 1;
+}
+
+.login-btn {
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: linear-gradient(135deg,#3fd2ff,#ffd86b);
+  color: #000;
+  font-weight: bold;
+}
+
+/* ================= USER MENU ================= */
+.user-menu {
+  position: relative;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* ✅ แก้ตรงนี้ */
+.dropdown {
+  position: absolute;
+  right: 0;
+  top: 52px;
+
+  width: 230px;
+  max-height: 260px;          /* ⭐ จำกัดความสูง */
+  overflow-y: auto;           /* ⭐ เลื่อนภายในได้ */
+
+  background: #0e1525;
+  border-radius: 16px;
+  padding: 16px;
+  display: none;
+
+  z-index: 9999;
+  box-shadow: 0 20px 40px rgba(0,0,0,.5);
+}
+
+/* scrollbar สวย */
+.dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+.dropdown::-webkit-scrollbar-thumb {
+  background: #2a3b5f;
+  border-radius: 10px;
+}
+
+.dropdown hr {
+  border: none;
+  border-top: 1px solid #1c2a44;
+  margin: 10px 0;
+}
+
+.logout {
+  color: #ff6b6b;
+  text-decoration: none;
+  display: block;
+  margin-top: 8px;
+}
+
+/* ================= HERO ================= */
+.hero {
+  max-width: 1200px;
+  margin: 60px auto 40px;
+  padding: 56px;
+  border-radius: 24px;
+  background: linear-gradient(135deg,#0a2347,#3a3f3c);
+  box-shadow: 0 0 80px rgba(63,210,255,.12);
+}
+
+.hero h1 {
+  font-size: 48px;
+}
+
+.hero h1 span {
+  color: #3fd2ff;
+}
+
+.hero p {
+  margin-top: 10px;
+  opacity: .85;
+}
+
+/* ================= STATS ================= */
+.stats {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.stats .card {
+  background: linear-gradient(180deg,#0b1628,#0a1424);
+  border: 1px solid #1c2a44;
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.02);
+}
+
+.stats h3 {
+  font-size: 14px;
+  opacity: .75;
+}
+
+.stats span {
+  display: block;
+  margin-top: 12px;
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffd86b;
+}
+
+/* ================= SYSTEMS ================= */
+.systems {
+  max-width: 1200px;
+  margin: 50px auto 80px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.sys {
+  background: linear-gradient(180deg,#0b1628,#0a1424);
+  border: 1px solid #1c2a44;
+  border-radius: 22px;
+  padding: 36px;
+  text-decoration: none;
+  color: #fff;
+  text-align: center;
+  transition: .25s ease;
+}
+
+.sys h2 {
+  margin-bottom: 10px;
+}
+
+.sys p {
+  font-size: 14px;
+  opacity: .8;
+}
+
+/* glow */
+.sys.police { box-shadow: 0 0 40px rgba(63,210,255,.25); }
+.sys.ems    { box-shadow: 0 0 40px rgba(255,216,107,.25); }
+.sys.admin  { box-shadow: 0 0 40px rgba(140,140,255,.25); }
+
+.sys:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 0 60px rgba(255,255,255,.25);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 900px) {
+  .stats { grid-template-columns: repeat(2,1fr); }
+  .systems { grid-template-columns: 1fr; }
+  .navbar { padding: 16px 24px; }
+}
+/* ================= USER NAVBAR STYLE ================= */
+/* ===== NAVBAR THEME (LOGO STYLE) ===== */
+.user-navbar {
+  background: linear-gradient(
+    90deg,
+    #081a2f,
+    #0b2d52,
+    #0e3a6d
+  );
+  box-shadow: 0 10px 40px rgba(0,0,0,.6);
+  border-bottom: 1px solid rgba(80,160,255,.15);
+}
+
+
+.user-navbar .nav-links {
+  gap: 32px;
+}
+
+.user-navbar .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.user-navbar .user-menu {
+  position: relative;
+}
+
+.user-navbar .dropdown {
+  position: absolute;
+  right: 0;
+  top: 48px;
+  background: #0e1525;
+  border-radius: 14px;
+  padding: 14px;
+  display: none;
+  width: 180px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.5);
+}
+
+.user-navbar .user-menu:hover .dropdown {
+  display: block;
+}
+/* ================= USER NAVBAR (AFTER LOGIN) ================= */
+.user-navbar {
+  background: linear-gradient(90deg, #2b1248, #3a1a5f, #2b1248);
+  padding: 18px 48px;
+}
+
+/* เมนูกลาง */
+.center-menu {
+  flex: 1;
+  justify-content: center;
+  gap: 36px;
+}
+
+.center-menu a {
+  font-weight: 500;
+  opacity: 0.9;
+}
+
+.center-menu a:hover {
+  opacity: 1;
+}
+
+/* โปรไฟล์ขวาสุด */
+.user-navbar .user-menu {
+  position: relative;
+  margin-left: auto;
+}
+
+.user-navbar .avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(255,255,255,.3);
+}
+
+/* dropdown */
+.user-navbar .dropdown {
+  position: absolute;
+  right: 0;
+  top: 48px;
+  background: #0e1525;
+  border-radius: 14px;
+  padding: 14px;
+  display: none;
+  width: 180px;
+  box-shadow: 0 20px 40px rgba(0,0,0,.5);
+  z-index: 9999;
+}
+
+.user-navbar .user-menu:hover .dropdown {
+  display: block;
+}
+.center-menu a {
+  color: #cfe6ff;
+  letter-spacing: .5px;
+  transition: all .25s ease;
+}
+
+.center-menu a:hover {
+  color: #ffffff;
+  text-shadow: 0 0 10px rgba(120,180,255,.6);
+}
+/* ===== FORCE NAVBAR THEME (OVERRIDE ALL) ===== */
+.user-navbar {
+  background: linear-gradient(
+    90deg,
+    #071a2f,
+    #0b2f55,
+    #0f3f78
+  ) !important;
+
+  box-shadow: 0 10px 40px rgba(0,0,0,.6) !important;
+  border-bottom: 1px solid rgba(120,180,255,.2) !important;
+}
+.profile-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(255,255,255,0.6);
+}
+/* ===== PROFILE CLICK DROPDOWN ===== */
+.profile-avatar {
+  width: 52px;              /* ขยายรูป */
+  height: 52px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(255,255,255,.6);
+}
+
+/* dropdown ซ่อนก่อน */
+.user-menu .dropdown {
+  display: none;
+}
+
+/* แสดงเมื่อมี class active */
+.user-menu.active .dropdown {
+  display: block;
+}
+/* ===== LUXURY PROFILE (DISCORD STYLE) ===== */
+.luxury-profile {
+  background: linear-gradient(180deg, #2b2436, #1b1624);
+  border-radius: 14px;
+  padding: 14px;
+  min-width: 260px;
+  box-shadow: 0 25px 60px rgba(0,0,0,.65);
+  color: #eaeaff;
+  animation: fadeUp .25s ease;
+}
+
+/* top section */
+.profile-top {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.profile-avatar-large {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  object-fit: cover;
+}
+
+.profile-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.profile-badge {
+  margin-top: 4px;
+  font-size: 12px;
+  background: #5865f2;
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 999px;
+  width: fit-content;
+}
+
+/* stats */
+.profile-stats {
+  font-size: 13px;
+  color: #cfcfe6;
+}
+
+.profile-stats div {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.profile-stats b {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* divider */
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,.08);
+  margin: 12px 0;
+}
+
+/* links */
+.profile-link {
+  display: block;
+  padding: 8px 0;
+  color: #cfd3ff;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.profile-link:hover {
+  color: #ffffff;
+}
+
+/* logout */
+.profile-logout {
+  display: block;
+  padding: 8px 0;
+  color: #ff6b6b;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.profile-logout:hover {
+  color: #ff3b3b;
+}
+
+/* animation */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* ===== PROFILE AVATAR ===== */
+.profile-avatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid rgba(255,255,255,.6);
+}
+
+/* dropdown ซ่อนก่อน */
+.user-menu .dropdown {
+  display: none;
+}
+
+/* เปิดเมื่อ active */
+.user-menu.active .dropdown {
+  display: block;
+}
+
+/* ===== DUTY PAGE ===== */
+.duty-wrapper{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:calc(100vh - 100px);
+}
+
+.duty-card{
+  width:360px;
+  padding:32px;
+  border-radius:20px;
+  background:linear-gradient(180deg,#0b1628,#0a1424);
+  box-shadow:0 0 60px rgba(63,210,255,.2);
+  text-align:center;
+}
+
+.duty-card h2{
+  margin-bottom:10px;
+}
+
+#clock{
+  font-size:22px;
+  margin-bottom:20px;
+  color:#ffd86b;
+}
+
+.duty-card select,
+.duty-card button{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  border-radius:10px;
+  border:none;
+  font-size:15px;
+}
+
+.duty-card button{
+  background:linear-gradient(135deg,#3fd2ff,#ffd86b);
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.duty-card button.out{
+  background:linear-gradient(135deg,#ff6b6b,#ffa07a);
+}
+
+.status{
+  margin-top:16px;
+  font-weight:600;
+}
+.status.on{ color:#4cff9a; }
+.status.off{ color:#ff6b6b; }
+
+/* ===== DUTY HISTORY ===== */
+
+.summary-box {
+  display: flex;
+  gap: 40px;
+  margin: 20px 0 30px;
+  font-size: 18px;
+}
+
+.summary-box p {
+  background: rgba(255,255,255,0.08);
+  padding: 12px 20px;
+  border-radius: 12px;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.history-table th,
+.history-table td {
+  padding: 14px 18px;
+  text-align: left;
+}
+
+.history-table thead {
+  background: rgba(255,255,255,0.12);
+}
+
+.history-table tbody tr {
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.history-table tbody tr:hover {
+  background: rgba(255,255,255,0.05);
+}
+/* ===== DUTY LIST ===== */
+
+.duty-list-card {
+  margin-top: 30px;
+}
+
+.duty-columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.duty-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  padding-bottom: 6px;
+}
+
+.duty-names {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.duty-names li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 16px;
+}
+
+.duty-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2ecc71;
+}
+/* ===== ADMIN RANK BOX ===== */
+
+.rank-user {
+  background: linear-gradient(180deg,#0b1628,#0a1424);
+  border: 1px solid #1c2a44;
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+}
+
+.rank-name {
+  font-size: 16px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.rank-id {
+  font-size: 13px;
+  opacity: .75;
+  margin-top: 4px;
+}
+/* ===== ADMIN FORM ===== */
+.admin-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr 180px;
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.admin-form input,
+.admin-form select {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 14px;
+  padding: 14px 16px;
+  font-size: 15px;
+  color: #fff;
+  outline: none;
+  transition: all .25s ease;
+}
+
+.admin-form input::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+
+.admin-form input:focus,
+.admin-form select:focus {
+  border-color: #3fd2ff;
+  box-shadow: 0 0 0 2px rgba(63,210,255,.25);
+}
+
+/* ===== ADMIN USER CARD (ROLE + DELETE) ===== */
+
+.rank-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.rank-badge {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .5px;
+}
+
+/* 👮 POLICE – ฟ้า / น้ำเงิน */
+.rank-badge.police {
+  color: #dbeafe;
+  background: linear-gradient(135deg, #0ea5e9, #1e3a8a);
+  box-shadow: 0 0 10px rgba(56,189,248,.45);
+}
+
+/* 🚑 MEDIC – ขาว / ชมพู */
+.rank-badge.medic {
+  color: #ffffff;
+  background: linear-gradient(135deg, #f9a8d4, #ec4899);
+  box-shadow: 0 0 10px rgba(236,72,153,.45);
+}
+
+/* ===== DELETE BUTTON ===== */
+
+.delete-btn {
+  background: linear-gradient(135deg,#ef4444,#7f1d1d);
+  border: none;
+  border-radius: 10px;
+  padding: 8px 14px;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.delete-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(239,68,68,.6);
+}
+/* ===== ADMIN LIST LAYOUT UPGRADE ===== */
+
+#policeList,
+#medicList {
+  margin-top: 18px;
+}
+
+/* หัวข้อ POLICE / MEDIC */
+#policeList h3,
+#medicList h3 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid rgba(255,255,255,0.18);
+}
+
+/* ===== USER CARD ===== */
+.rank-user {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  background: linear-gradient(180deg,#081428,#050b18);
+  border-radius: 16px;
+  padding: 14px 18px;
+  margin-bottom: 12px;
+
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.04),
+    0 8px 30px rgba(0,0,0,.35);
+
+  transition: .25s ease;
+}
+
+.rank-user:hover {
+  transform: translateY(-2px);
+}
+
+/* แถวบน: ชื่อ + ยศ + ลบ */
+.rank-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* กลุ่มชื่อ + badge */
+.rank-top > div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ชื่อ */
+.rank-name {
+  font-size: 17px;
+  font-weight: 600;
+  color: #ffffff;
+  letter-spacing: .3px;
+}
+
+/* ยศ */
+.rank-badge {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ID */
+.rank-id {
+  font-size: 12px;
+  color: rgba(255,255,255,.6);
+  padding-left: 2px;
+}
+
+/* ===== DELETE BUTTON (จัดตำแหน่งใหม่) ===== */
+.delete-btn {
+  margin-left: 16px;
+  min-width: 56px;
+  height: 34px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg,#ef4444,#7f1d1d);
+  border-radius: 10px;
+  border: none;
+
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+
+  cursor: pointer;
+  transition: .2s;
+}
+
+.delete-btn:hover {
+  box-shadow: 0 0 12px rgba(239,68,68,.6);
+  transform: scale(1.05);
+}
+.rank-user:has(.rank-badge.police) {
+  box-shadow: 0 0 30px rgba(56,189,248,.15);
+}
+
+.rank-user:has(.rank-badge.medic) {
+  box-shadow: 0 0 30px rgba(236,72,153,.15);
+}
+/* ===== ADMIN INPUT SIZE UPGRADE ===== */
+
+.hero input,
+.hero select {
+  height: 46px;              /* เพิ่มความสูง */
+  font-size: 16px;           /* ตัวอักษรใหญ่ขึ้นนิด */
+  padding: 0 16px;           /* ช่องหายใจซ้ายขวา */
+  border-radius: 12px;       /* มนขึ้น ดูพรีเมียม */
+}
+
+/* ช่องชื่อ – กว้างขึ้น */
+#name {
+  width: 260px;
+}
+
+/* Steam / Discord – กว้างขึ้น */
+#steam {
+  width: 300px;
+}
+
+/* เลือกยศ */
+#rank {
+  width: 160px;
+}
+.filter-box {
+  margin: 15px 0;
+  display: flex;
+  gap: 10px;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: none;
+  background: #2c3e50;
+  color: #fff;
+  cursor: pointer;
+}
+
+.filter-btn.active {
+  background: #3498db;
+}
+.section {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px;
+}

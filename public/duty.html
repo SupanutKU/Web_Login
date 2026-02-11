@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>เข้า-ออกเวร | Center City</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<nav class="navbar user-navbar">
+  <div class="logo">
+    <img src="/assets/logo.png" class="logo-img">
+    <span>CENTER CITY</span>
+  </div>
+
+  <ul class="nav-links center-menu">
+    <li><a href="/index.html">หน้าหลัก</a></li>
+    <li><a href="/duty.html" class="active">เข้าเวร-ออกเวร</a></li>
+    <li><a href="/history.html">ประวัติ</a></li>
+  </ul>
+</nav>
+
+<div class="duty-wrapper">
+  <div class="duty-card">
+    <h2>ระบบเข้า - ออกเวร</h2>
+    <div id="clock">00:00:00</div>
+
+    <select id="nameSelect">
+      <option value="">-- เลือกชื่อ --</option>
+    </select>
+
+    <button onclick="checkIn()">เข้าเวร</button>
+    <button class="out" onclick="checkOut()">ออกเวร</button>
+
+    <div id="status" class="status off">🔴 ยังไม่ได้เข้าเวร</div>
+  </div>
+</div>
+
+<script>
+const statusEl = document.getElementById("status");
+const nameSelect = document.getElementById("nameSelect");
+
+/* CLOCK */
+setInterval(()=>{
+  document.getElementById("clock").innerText =
+    new Date().toLocaleTimeString("th-TH");
+},1000);
+
+/* LOAD USERS */
+fetch("/api/users")
+  .then(r=>r.json())
+  .then(users=>{
+    users.forEach(u=>{
+      const o=document.createElement("option");
+      o.value=u.name;
+      o.textContent=u.name;
+      nameSelect.appendChild(o);
+    });
+  });
+
+/* CHECK IN */
+let onDuty = false;
+const status = document.getElementById("status");
+
+/* ===== CHECK IN ===== */
+function checkIn() {
+  const name = nameSelect.value;
+  if (!name) return alert("กรุณาเลือกชื่อ");
+
+  fetch("/api/duty/checkin", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (!data.success) {
+      alert(data.message);
+      return;
+    }
+
+    onDuty = true;
+    status.innerText = "🟢 อยู่ระหว่างเข้าเวร";
+    status.className = "status on";
+  });
+}
+
+/* ===== CHECK OUT ===== */
+function checkOut() {
+  const name = nameSelect.value;
+  if (!name) return alert("กรุณาเลือกชื่อ");
+
+  fetch("/api/duty/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (!data.success) {
+      alert(data.message);
+      return;
+    }
+
+    onDuty = false;
+    status.innerText = "🔴 ออกเวรแล้ว";
+    status.className = "status off";
+  });
+}
+</script>
+
+</body>
+</html>
