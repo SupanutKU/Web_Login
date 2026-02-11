@@ -2,7 +2,7 @@ const fetch = require("node-fetch");
 
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
 const CLIENT_SECRET = process.env.DISCORD_CLIENT_SECRET;
-const REDIRECT_URI = "http://localhost:3000/auth/discord/callback";
+const REDIRECT_URI = "https://center-agency.up.railway.app/auth/discord/callback";
 
 exports.login = (req, res) => {
   const url =
