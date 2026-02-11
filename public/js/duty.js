@@ -7,6 +7,7 @@ setInterval(updateClock, 1000);
 updateClock();
 
 /* ===== ELEMENTS ===== */
+const departmentSelect = document.getElementById("departmentSelect");
 const nameSelect = document.getElementById("nameSelect");
 const status = document.getElementById("status");
 const checkInBtn = document.getElementById("checkInBtn");
@@ -14,22 +15,48 @@ const checkOutBtn = document.getElementById("checkOutBtn");
 const profileBtn = document.getElementById("profileBtn");
 
 let onDuty = false;
+let allUsers = [];
 
-/* ===== LOAD USERS ===== */
-function loadNames() {
-  fetch("/api/users")
-    .then(res => res.json())
-    .then(users => {
-      nameSelect.innerHTML = `<option value="">-- เลือกชื่อ --</option>`;
-      users.forEach(u => {
-        const opt = document.createElement("option");
-        opt.value = u.name;
-        opt.textContent = u.name;
-        nameSelect.appendChild(opt);
-      });
+/* ===== LOAD USERS + DEPARTMENTS ===== */
+fetch("/api/users")
+  .then(res => res.json())
+  .then(users => {
+    allUsers = users;
+
+    // ดึงหน่วยงานไม่ซ้ำจาก role
+    const departments = [...new Set(users.map(u => u.role))];
+
+    departments.forEach(dep => {
+      if (!dep) return;
+      const opt = document.createElement("option");
+      opt.value = dep;
+      opt.textContent = dep;
+      departmentSelect.appendChild(opt);
     });
-}
-loadNames();
+  });
+
+/* ===== เลือกหน่วยงาน ===== */
+departmentSelect.addEventListener("change", () => {
+  const dep = departmentSelect.value;
+
+  nameSelect.innerHTML = `<option value="">-- เลือกชื่อ --</option>`;
+
+  if (!dep) {
+    nameSelect.disabled = true;
+    return;
+  }
+
+  const filtered = allUsers.filter(u => u.role === dep);
+
+  filtered.forEach(u => {
+    const opt = document.createElement("option");
+    opt.value = u.name;
+    opt.textContent = u.name;
+    nameSelect.appendChild(opt);
+  });
+
+  nameSelect.disabled = false;
+});
 
 /* ===== CHECK IN ===== */
 function checkIn() {
@@ -75,15 +102,18 @@ function checkOut() {
     });
 }
 
-/* ✅⭐ ผูกปุ่ม (ตัวที่ขาด) */
-checkInBtn.addEventListener("click", checkIn);
-checkOutBtn.addEventListener("click", checkOut);
+/* ===== ผูกปุ่ม ===== */
+if (checkInBtn) checkInBtn.addEventListener("click", checkIn);
+if (checkOutBtn) checkOutBtn.addEventListener("click", checkOut);
 
 /* ===== PROFILE ===== */
-profileBtn.onclick = e => {
-  e.stopPropagation();
-  document.querySelector(".user-menu").classList.toggle("active");
-};
-document.addEventListener("click", () => {
-  document.querySelector(".user-menu").classList.remove("active");
-});
+if (profileBtn) {
+  profileBtn.onclick = e => {
+    e.stopPropagation();
+    document.querySelector(".user-menu")?.classList.toggle("active");
+  };
+
+  document.addEventListener("click", () => {
+    document.querySelector(".user-menu")?.classList.remove("active");
+  });
+}

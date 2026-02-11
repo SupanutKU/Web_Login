@@ -25,7 +25,11 @@
     <h2>ระบบเข้า - ออกเวร</h2>
     <div id="clock">00:00:00</div>
 
-    <select id="nameSelect">
+    <select id="departmentSelect">
+      <option value="">-- เลือกหน่วยงาน --</option>
+    </select>
+
+    <select id="nameSelect" disabled>
       <option value="">-- เลือกชื่อ --</option>
     </select>
 
@@ -37,30 +41,60 @@
 </div>
 
 <script>
-const statusEl = document.getElementById("status");
-const nameSelect = document.getElementById("nameSelect");
-
-/* CLOCK */
-setInterval(()=>{
+/* ===== CLOCK ===== */
+setInterval(() => {
   document.getElementById("clock").innerText =
     new Date().toLocaleTimeString("th-TH");
-},1000);
+}, 1000);
 
-/* LOAD USERS */
+/* ===== ELEMENTS ===== */
+const departmentSelect = document.getElementById("departmentSelect");
+const nameSelect = document.getElementById("nameSelect");
+const status = document.getElementById("status");
+
+let onDuty = false;
+let allUsers = [];
+
+/* ===== LOAD USERS ===== */
 fetch("/api/users")
-  .then(r=>r.json())
-  .then(users=>{
-    users.forEach(u=>{
-      const o=document.createElement("option");
-      o.value=u.name;
-      o.textContent=u.name;
-      nameSelect.appendChild(o);
+  .then(r => r.json())
+  .then(users => {
+    allUsers = users;
+
+    // สร้างรายการหน่วยงานไม่ซ้ำจาก role
+    const departments = [...new Set(users.map(u => u.role))];
+
+    departments.forEach(dep => {
+      if (!dep) return;
+      const opt = document.createElement("option");
+      opt.value = dep;
+      opt.textContent = dep;
+      departmentSelect.appendChild(opt);
     });
   });
 
-/* CHECK IN */
-let onDuty = false;
-const status = document.getElementById("status");
+/* ===== เลือกหน่วยงาน ===== */
+departmentSelect.addEventListener("change", () => {
+  const dep = departmentSelect.value;
+
+  nameSelect.innerHTML = `<option value="">-- เลือกชื่อ --</option>`;
+
+  if (!dep) {
+    nameSelect.disabled = true;
+    return;
+  }
+
+  const filtered = allUsers.filter(u => u.role === dep);
+
+  filtered.forEach(u => {
+    const opt = document.createElement("option");
+    opt.value = u.name;
+    opt.textContent = u.name;
+    nameSelect.appendChild(opt);
+  });
+
+  nameSelect.disabled = false;
+});
 
 /* ===== CHECK IN ===== */
 function checkIn() {
